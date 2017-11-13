@@ -1,0 +1,24 @@
+[package]
+name = "lab2-1-rs"
+version = "0.1.0"
+authors = ["Sergey Mishin <sergei.a.mishin@gmail.com>"]
+
+[dependencies]
+glium = "0.17.1"
+image = "0.16.0"
+genmesh = "0.4"
+obj = { version = "0.8", features = ["genmesh"] }
+# obj-rs = { version = "0.4", features = ["glium-support"] }
+wavefront_obj = "5.1.0"
+cgmath = "*"
+
+
+[dependencies.glutin]
+version = "0.9"
+features = []
+optional = true
+
+[features]
+default = ["glutin"]
+unstable = [] # used for benchmarks
+test_headless = []  # used for testing headless display
