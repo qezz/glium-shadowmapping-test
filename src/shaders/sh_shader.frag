@@ -82,5 +82,5 @@ void main(void){
 	// out_Colour = mix(tex_Colour, enviroColour, 0.0);
 	// out_Colour = vec4(d, d, d, 1.0);
 
-	// depth = gl_FragCoord.z;
+	depth = gl_FragCoord.z;
 }
