@@ -7,6 +7,7 @@ use glium::Texture2d;
 use std::io::Cursor;
 
 pub mod skybox;
+pub mod program;
 
 pub trait Reload {
     fn reload(&mut self);

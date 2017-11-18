@@ -28,7 +28,7 @@ struct Light {
 
 
 // const vec3 lightDirection = // normalize(vec3(10.2, -1.0, 10.3));
-const float ambient = 0.7;
+const float ambient = 0.2;
 
 const int MAX_LIGHTS = 10;
 

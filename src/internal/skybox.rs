@@ -14,7 +14,9 @@ pub struct Skybox {
     pub indices: IndexBuffer<u8>,
     pub program: Program,
     pub cubemap: glium::texture::Cubemap,
-    pub distance: f32
+    pub distance: f32,
+    pub dest_rect: glium::BlitTarget,
+
 }
 
 impl Skybox {
@@ -153,7 +155,13 @@ void main(void){
             indices: indices,
             cubemap: glium::texture::Cubemap::empty(display_ref, 2048).unwrap(),
             distance: dist,
-            textures: textures
+            textures: textures,
+            dest_rect: glium::BlitTarget {
+                left: 0,
+                bottom: 0,
+                width: 2048,
+                height: 2048,
+            }
         }
     }
 }
