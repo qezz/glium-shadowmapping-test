@@ -18,8 +18,16 @@ void main(void){
 	// Material properties
 	vec3 MaterialDiffuseColor = texture( myTextureSampler, UV ).rgb;
 
-	float visibility = texture( shadowMap, vec3(ShadowCoord.xy, (ShadowCoord.z)/ShadowCoord.w) );
+	float visibility = texture(
+			shadowMap,
+			vec3(
+					ShadowCoord.xy,
+					(ShadowCoord.z)/ShadowCoord.w
+				)
+		);
 
 	out_Colour = visibility * MaterialDiffuseColor * LightColor;
+	// out_Colour = MaterialDiffuseColor * LightColor;
+	// out_Colour = ShadowCoord.xyz;
 
 }
