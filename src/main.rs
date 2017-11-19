@@ -219,8 +219,23 @@ fn main() {
                                                     glium::texture::MipmapsOption::NoMipmap,
                                                     1280, 1280).unwrap();
 
+
+
     let depth_data = iter::repeat(iter::repeat(0.0f32).take(1280).collect::<Vec<_>>())
-                                  .take(1280).collect::<Vec<_>>();
+        .take(1280).collect::<Vec<_>>();
+
+    // let test_texture_2 =
+    //     glium::texture::depth_texture2d::DepthTexture2d::empty_with_format(&display,
+    //                                                                        glium::texture::DepthFormat::I24,
+    //                                                                        // glium::texture::UncompressedFloatFormat::U8U8U8U8,
+    //                                                                        glium::texture::MipmapsOption::NoMipmap,
+    //                                                                        1280, 1280).unwrap();
+
+    // let test_texture_2 =
+    //     glium::texture::depth_texture2d::DepthTexture2d::new(&display,
+    //                                                          depth_data,
+    //                                                          glium::texture::MipmapsOption::NoMipmap);
+
     let test_depth = match glium::texture::DepthTexture2d::new(&display, depth_data) {
         Err(_) => return,
         Ok(t) => t
@@ -421,21 +436,21 @@ fn main() {
             view_matrix: camera.get_view(),
         };
 
-        let another_surface_uniforms = uniform! {
-            model: another_surface_model,
-            view: camera.get_view(),
-            perspective: camera.get_perspective(),
-            u_light: light,
-            diffuse_tex: &texture1, // &asphalt_texture,
-            // normal_tex: &normal_map
+        // let another_surface_uniforms = uniform! {
+        //     model: another_surface_model,
+        //     view: camera.get_view(),
+        //     perspective: camera.get_perspective(),
+        //     u_light: light,
+        //     diffuse_tex: &texture1, // &asphalt_texture,
+        //     // normal_tex: &normal_map
 
-            ReflectFactor: reflect_factor,
-            MaterialColor: material_color,
-            cameraPosition: camera.position, // camera_position,
+        //     ReflectFactor: reflect_factor,
+        //     MaterialColor: material_color,
+        //     cameraPosition: camera.position, // camera_position,
 
-            persp_matrix: camera.get_perspective(),
-            view_matrix: camera.get_view(),
-        };
+        //     persp_matrix: camera.get_perspective(),
+        //     view_matrix: camera.get_view(),
+        // };
 
 
 
@@ -449,12 +464,14 @@ fn main() {
         // let light_view_matrix: cgmath::Matrix4<f32> =
         //     cgmath::Matrix4::look_at(view_eye, view_center, view_up);
 
+        let radius = 10.0;
+
         let lightInvDir: cgmath::Vector3<f32> = // cgmath::vec3(0.5, 2.0, 2.0_f32);
-            cgmath::vec3((iteration as f32 / 10.0).sin() * 14.0,
-                     -10.0,
-                     (iteration as f32 / 10.0).cos() * 14.0);
+            cgmath::vec3((iteration as f32 / 10.0).sin() * radius,
+                     10.0,
+                     (iteration as f32 / 10.0).cos() * radius);
         let depthProjectionMatrix: cgmath::Matrix4<f32> = cgmath::ortho(-10.0, 10.0, -10.0, 10.0, -10.0, 20.0_f32);
-        println!("{:?}", depthProjectionMatrix);
+        // println!("{:?}", depthProjectionMatrix);
         let depthViewMatrix: cgmath::Matrix4<f32> =
             cgmath::Matrix4::look_at(cgmath::EuclideanSpace::from_vec(lightInvDir),
                                      cgmath::Point3{x: 0.0, y: 0.0, z: 0.0_f32},
@@ -490,6 +507,9 @@ fn main() {
             persp_matrix: camera.get_perspective(),
             view_matrix: camera.get_view(),
             // cubetex: sky.cubemap.sampled().magnify_filter(glium::uniforms::MagnifySamplerFilter::Nearest),
+
+            myTextureSampler: &asphalt_texture,
+            shadowMap: &test_depth, // &test_texture_2, // &test_texture,
         };
 
         let mut target = display.draw();

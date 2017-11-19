@@ -22,6 +22,9 @@ in vec3 normal;
 uniform mat4 depthMVP;
 uniform mat4 DepthBiasMVP;
 
+out vec2 UV;
+out vec4 ShadowCoord;
+
 void main(void){
 
 	// vec4 worldPosition = model * vec4(position, 1.0); // transformationMatrix * vec4(position, 1.0);
@@ -43,5 +46,6 @@ void main(void){
 	// shadowCoord = depth_view_proj * world_coords;
 
 	gl_Position =  depthMVP * vec4(position, 1);
-	// ShadowCoord = DepthBiasMVP * vec4(position, 1);
+	ShadowCoord = DepthBiasMVP * vec4(position, 1);
+	UV = tex_coords;
 }
