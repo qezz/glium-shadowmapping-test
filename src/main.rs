@@ -45,12 +45,12 @@ fn main() {
     let shadow_resolution: u32 = 128; //1024;
 
     let depth_program = program_from_shader_paths(&display,
-                                                  "shaders/depth_sh.vert",
-                                                  "shaders/depth_sh.frag");
+                                                  "src/shaders/depth_sh.vert",
+                                                  "src/shaders/depth_sh.frag");
 
-    let texture = load_jpg_texture(&display, "../resources/textures/earth.jpg");
+    let texture = load_jpg_texture(&display, "resources/textures/earth.jpg");
 
-    let room_vertices = runtime_readbytes("../resources/objects/room_thickwalls.obj");
+    let room_vertices = runtime_readbytes("resources/objects/room_thickwalls.obj");
     let room_vb = load_wavefront(&display, &room_vertices.as_slice());
 
 
@@ -71,8 +71,8 @@ fn main() {
 
 
     let sh_program = program_from_shader_paths(&display,
-                                               "shaders/sh_shader.vert",
-                                               "shaders/sh_shader.frag");
+                                               "src/shaders/sh_shader.vert",
+                                               "src/shaders/sh_shader.frag");
 
     support::start_loop(|| {
 
