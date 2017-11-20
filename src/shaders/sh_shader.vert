@@ -5,11 +5,12 @@ in vec3 position;
 in vec2 tex_coords;
 in vec3 normal;
 
+out vec2 UV;
+out vec4 ShadowCoord;
+
 uniform mat4 MVP;
 uniform mat4 DepthBiasMVP;
 
-out vec2 UV;
-out vec4 ShadowCoord;
 
 void main(void){
 

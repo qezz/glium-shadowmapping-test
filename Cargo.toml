@@ -1,5 +1,5 @@
 [package]
-name = "lab2-1-rs"
+name = "glium-shadow-mapping"
 version = "0.1.0"
 authors = ["Sergey Mishin <sergei.a.mishin@gmail.com>"]
 
