@@ -48,7 +48,7 @@ fn main() {
                                                   "src/shaders/depth_sh.vert",
                                                   "src/shaders/depth_sh.frag");
 
-    let texture = load_jpg_texture(&display, "resources/textures/earth.jpg");
+    let texture = load_jpg_texture(&display, "resources/textures/asphalt.jpg");
 
     let room_vertices = runtime_readbytes("resources/objects/room_thickwalls.obj");
     let room_vb = load_wavefront(&display, &room_vertices.as_slice());
@@ -63,10 +63,10 @@ fn main() {
      // let mut framebuffer = glium::framebuffer::SimpleFrameBuffer::depth_only(&display, &depth_texture)
      //    .unwrap();
 
-    let texture = glium::texture::Texture2d::empty_with_format(&display, glium::texture::UncompressedFloatFormat::I16I16I16I16, glium::texture::MipmapsOption::NoMipmap,
-                                                                     shadow_resolution, shadow_resolution).unwrap();
+    // let texture = glium::texture::Texture2d::empty_with_format(&display, glium::texture::UncompressedFloatFormat::I16I16I16I16, glium::texture::MipmapsOption::NoMipmap,
+    //                                                                  shadow_resolution, shadow_resolution).unwrap();
 
-    let mut framebuffer = glium::framebuffer::SimpleFrameBuffer::with_depth_buffer(&display, &texture, &depth_texture)
+    let mut framebuffer = glium::framebuffer::SimpleFrameBuffer::depth_only(&display, &depth_texture)
         .unwrap();
 
 
@@ -184,8 +184,8 @@ fn main() {
         let sh_uniforms = uniform! {
             MVP: Into::<[[f32; 4]; 4]>::into(mvp),
             DepthBiasMVP:  Into::<[[f32; 4]; 4]>::into(depth_bias_mvp),
-            myTextureSampler: texture.sampled().magnify_filter(glium::uniforms::MagnifySamplerFilter::Nearest),
-            shadowMap: depth_texture.sampled().magnify_filter(glium::uniforms::MagnifySamplerFilter::Nearest),
+            myTextureSampler: &texture,
+            shadowMap: &depth_texture
         };
 
         // depth_texture
