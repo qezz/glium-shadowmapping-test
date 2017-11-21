@@ -63,11 +63,15 @@ fn main() {
      // let mut framebuffer = glium::framebuffer::SimpleFrameBuffer::depth_only(&display, &depth_texture)
      //    .unwrap();
 
-    // let texture = glium::texture::Texture2d::empty_with_format(&display, glium::texture::UncompressedFloatFormat::I16I16I16I16, glium::texture::MipmapsOption::NoMipmap,
-    //                                                                  shadow_resolution, shadow_resolution).unwrap();
+    // let texture_depth_color = glium::texture::Texture2d::empty_with_format(&display, glium::texture::UncompressedFloatFormat::I16I16I16, glium::texture::MipmapsOption::NoMipmap,
+    //         shadow_resolution, shadow_resolution).unwrap();
 
     let mut framebuffer = glium::framebuffer::SimpleFrameBuffer::depth_only(&display, &depth_texture)
         .unwrap();
+
+    // let mut framebuffer = glium::framebuffer::SimpleFrameBuffer::with_depth_buffer(&display, &texture_depth_color,
+    //                                                                                &depth_texture)
+    //     .unwrap();
 
 
     let sh_program = program_from_shader_paths(&display,
@@ -152,12 +156,12 @@ fn main() {
 
         let params = glium::DrawParameters {
             depth: glium::Depth {
-                test: glium::DepthTest::IfLess,
+                test: glium::draw_parameters::DepthTest::IfLessOrEqual,
                 write: true,
-                // clamp: glium::draw_parameters::DepthClamp::Clamp;
+                clamp: glium::draw_parameters::DepthClamp::Clamp,
                 .. Default::default()
             },
-            backface_culling: glium::draw_parameters::BackfaceCullingMode::CullClockwise,
+            // backface_culling: glium::draw_parameters::BackfaceCullingMode::CullClockwise,
             .. Default::default()
         };
 
@@ -180,12 +184,14 @@ fn main() {
         // panic!();
 
 
-
         let sh_uniforms = uniform! {
             MVP: Into::<[[f32; 4]; 4]>::into(mvp),
             DepthBiasMVP:  Into::<[[f32; 4]; 4]>::into(depth_bias_mvp),
             myTextureSampler: &texture,
-            shadowMap: &depth_texture
+            shadowMap: depth_texture.sampled()
+                .magnify_filter(glium::uniforms::MagnifySamplerFilter::Linear)
+                .minify_filter(glium::uniforms::MinifySamplerFilter::Linear)
+                .wrap_function(glium::uniforms::SamplerWrapFunction::Clamp)
         };
 
         // depth_texture

@@ -1,4 +1,4 @@
-#version 150
+#version 330 core
 
 in vec2 UV;
 in vec4 ShadowCoord;
@@ -18,7 +18,11 @@ void main(void){
 	// Material properties
 	vec3 MaterialDiffuseColor = texture( myTextureSampler, UV ).rgb;
 
-	float visibility = 0.1 + texture( shadowMap, vec3(ShadowCoord.xy, (ShadowCoord.z)/ShadowCoord.w) );
+	float visibility = 0.05 + texture( shadowMap,
+			vec3(ShadowCoord.xy, (ShadowCoord.z)/ShadowCoord.w)
+		);
+
+	// float visibility = visibility_non_norm
 
 	// color = (visibility * MaterialDiffuseColor) * LightColor;
 	color = visibility * MaterialDiffuseColor * LightColor;
