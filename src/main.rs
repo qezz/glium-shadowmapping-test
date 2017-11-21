@@ -42,7 +42,7 @@ fn main() {
 
     let mut iteration: u32 = 0;
 
-    let shadow_resolution: u32 = 128; //1024;
+    let shadow_resolution: u32 = 1024;
 
     let depth_program = program_from_shader_paths(&display,
                                                   "src/shaders/depth_sh.vert",
@@ -63,7 +63,7 @@ fn main() {
      // let mut framebuffer = glium::framebuffer::SimpleFrameBuffer::depth_only(&display, &depth_texture)
      //    .unwrap();
 
-    let light_texture = glium::texture::Texture2d::empty_with_format(&display, glium::texture::UncompressedFloatFormat::I16I16I16I16, glium::texture::MipmapsOption::NoMipmap,
+    let texture = glium::texture::Texture2d::empty_with_format(&display, glium::texture::UncompressedFloatFormat::I16I16I16I16, glium::texture::MipmapsOption::NoMipmap,
                                                                      shadow_resolution, shadow_resolution).unwrap();
 
     let mut framebuffer = glium::framebuffer::SimpleFrameBuffer::with_depth_buffer(&display, &texture, &depth_texture)
